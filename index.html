@@ -1,0 +1,384 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sector Profiles Overview</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+        }
+        .header {
+            background-color: #f8f9fa;
+            padding: 20px;
+            text-align: center;
+        }
+        .header img {
+            max-width: 150px;
+        }
+        .title {
+            margin: 20px 0;
+            text-align: center;
+            font-size: 24px;
+            font-weight: bold;
+        }
+        .buttons {
+            text-align: center;
+            margin: 20px 0;
+        }
+        .buttons button {
+            padding: 20px 20px;
+            font-size: 16px;
+            margin: 5px;
+            cursor: pointer;
+            width: 150px;
+            height: 150px;
+            display: inline-block;
+            vertical-align: top;
+        }
+        .dropdown {
+            width: 200px;
+            margin: 20px auto;
+            text-align: center;
+        }
+        .dropdown select {
+            width: 100%;
+            padding: 10px;
+            font-size: 16px;
+        }
+        .content {
+            display: none;
+            text-align: center;
+            margin: 20px 0;
+        }
+        .chart-container {
+            max-width: 600px;
+            margin: 0 auto;
+        }
+        .info-box {
+            border: 1px solid #ccc;
+            border-radius: 8px;
+            padding: 20px;
+            margin: 20px auto;
+            max-width: 500px;
+            text-align: left;
+            background-color: #f9f9f9;
+        }
+        .info-box h2 {
+            font-size: 20px;
+            margin-bottom: 10px;
+        }
+        .info-box p {
+            margin: 5px 0;
+            font-size: 16px;
+        }
+        .info-box .highlight {
+            font-weight: bold;
+            color: #007bff;
+        }
+        #map {
+            height: 500px;
+            margin: 20px 0;
+        }
+        .map-info {
+            display: flex;
+            justify-content: center;
+            flex-wrap: wrap;
+        }
+        .map-info div {
+            margin: 10px;
+            text-align: center;
+        }
+        .map-info div h3 {
+            margin: 5px 0;
+            font-size: 18px;
+            color: #007bff;
+        }
+        .map-info div p {
+            margin: 2px 0;
+            font-size: 16px;
+        }
+    </style>
+    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.7.1/dist/leaflet.css" />
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <script src="https://unpkg.com/leaflet@1.7.1/dist/leaflet.js"></script>
+</head>
+<body>
+    <div class="header">
+        <img src="logo_with_text.png" alt="NBJobs Logo 1">
+        <img src="logo.jpg" alt="NBJobs Logo 2">
+    </div>
+    <div class="title">
+        Sector Profiles Overview
+    </div>
+    <div class="buttons">
+        <button onclick="showContent('gdp')">GDP</button>
+        <button onclick="showContent('businessOutlook')">Business Outlook (2018-2027)</button>
+        <button onclick="showContent('employment')">Employment</button>
+        <button onclick="showContent('employmentDemographics')">Employment Demographics</button>
+        <button onclick="showContent('wageComparison')">Wage Comparison</button>
+        <button onclick="showContent('map')">Regional Highlights</button>
+    </div>
+    <div id="gdp" class="content chart-container">
+        <h1>GDP (Goods-producing vs Services)</h1>
+        <canvas id="gdpChart"></canvas>
+    </div>
+    <div id="businessOutlook" class="content">
+        <div class="info-box">
+            <h2>Business Outlook (2018-2027)</h2>
+            <p>Real GDP Change: <span class="highlight">+8.1%</span> over the period</p>
+            <p>Employment Change: <span class="highlight">+1.8%</span> over the period</p>
+            <p>Job Openings: <span class="highlight">120,046</span> over the period</p>
+        </div>
+    </div>
+    <div id="employment" class="content chart-container">
+        <h1>Employment</h1>
+        <canvas id="employmentChart"></canvas>
+    </div>
+    <div id="employmentDemographics" class="content chart-container">
+        <h1>Employment Demographics</h1>
+        <canvas id="employmentDemographicsChart"></canvas>
+    </div>
+    <div id="wageComparison" class="content chart-container">
+        <h1>Wage Comparison</h1>
+        <canvas id="wageComparisonChart"></canvas>
+    </div>
+    <div id="map" class="content">
+        <h1>Regional Highlights</h1>
+        <div id="map"></div>
+        <div class="map-info">
+            <div>
+                <h3>Northeast</h3>
+                <p>Employers: 5884</p>
+                <p>Employed: 59942</p>
+                <p>21.9%</p>
+                <p>16.6%</p>
+            </div>
+            <div>
+                <h3>Southeast</h3>
+                <p>Employers: 7776</p>
+                <p>Employed: 109022</p>
+                <p>28.9%</p>
+                <p>30.2%</p>
+            </div>
+            <div>
+                <h3>Southwest</h3>
+                <p>Employers: 5676</p>
+                <p>Employed: 87386</p>
+                <p>21.1%</p>
+                <p>24.2%</p>
+            </div>
+            <div>
+                <h3>Central</h3>
+                <p>Employers: 4487</p>
+                <p>Employed: 68248</p>
+                <p>16.7%</p>
+                <p>18.9%</p>
+            </div>
+            <div>
+                <h3>Northwest</h3>
+                <p>Employers: 3039</p>
+                <p>Employed: 36110</p>
+                <p>11.3%</p>
+                <p>10.0%</p>
+            </div>
+        </div>
+    </div>
+    <div class="dropdown">
+        <select>
+            <option value="">Select Industry Sector</option>
+            <option value="construction">Construction</option>
+            <option value="utilities">Utilities</option>
+            <option value="manufacturing">Manufacturing</option>
+            <option value="retail">Retail and Wholesale Trade</option>
+            <option value="transportation">Transportation and Warehousing</option>
+            <option value="information">Information, Culture, and Recreation</option>
+            <option value="finance">Finance, Insurance, Real Estate and Leasing</option>
+            <option value="professional">Professional, Scientific, and Technical Services</option>
+            <option value="business">Business, Building, and Other Support Services</option>
+            <option value="educational">Educational Services</option>
+            <option value="accommodation">Accommodation and Food Services</option>
+            <option value="healthcare">Healthcare and Social Assistance</option>
+            <option value="public">Public Administration</option>
+            <option value="other">Other Services</option>
+            <option value="natural_resources">Natural Resources</option>
+        </select>
+    </div>
+    <script>
+        function showContent(contentId) {
+            var contents = document.querySelectorAll('.content');
+            contents.forEach(function(content) {
+                content.style.display = 'none';
+            });
+
+            var selectedContent = document.getElementById(contentId);
+            selectedContent.style.display = 'block';
+
+            if (contentId === 'gdp') {
+                showGDP();
+            } else if (contentId === 'employment') {
+                showEmploymentChart();
+            } else if (contentId === 'employmentDemographics') {
+                showEmploymentDemographicsChart();
+            } else if (contentId === 'wageComparison') {
+                showWageComparisonChart();
+            } else if (contentId === 'map') {
+                showMap();
+            }
+        }
+
+        function showMap() {
+            var map = L.map('map').setView([46.5653, -66.4619], 7);
+
+            L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+                attribution: 'Map data &copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
+            }).addTo(map);
+
+            var regions = {
+                'Northeast': {'employers': 5884, 'employed': 59942, 'coordinates': [47.5, -65.5]},
+                'Southeast': {'employers': 7776, 'employed': 109022, 'coordinates': [45.9, -64.2]},
+                'Southwest': {'employers': 5676, 'employed': 87386, 'coordinates': [45.3, -66.1]},
+                'Central': {'employers': 4487, 'employed': 68248, 'coordinates': [46.1, -65.5]},
+                'Northwest': {'employers': 3039, 'employed': 36110, 'coordinates': [47.0, -67.5]}
+            };
+
+            for (var region in regions) {
+                var data = regions[region];
+                var marker = L.marker(data.coordinates).addTo(map);
+                var popupContent = `
+                    <h4>${region} Region</h4>
+                    <p><b>Employers:</b> ${data.employers}</p>
+                    <p><b>Employed:</b> ${data.employed}</p>
+                `;
+                marker.bindPopup(popupContent);
+            }
+        }
+
+        function showGDP() {
+            var ctx = document.getElementById('gdpChart').getContext('2d');
+            new Chart(ctx, {
+                type: 'pie',
+                data: {
+                    labels: ['Goods-producing', 'Services'],
+                    datasets: [{
+                        data: [21.1, 78.9],
+                        backgroundColor: ['#ff9999','#66b3ff'],
+                        hoverOffset: 4
+                    }]
+                },
+                options: {
+                    responsive: true,
+                    plugins: {
+                        legend: {
+                            position: 'top',
+                        },
+                        tooltip: {
+                            callbacks: {
+                                label: function(tooltipItem) {
+                                    return tooltipItem.label + ': ' + tooltipItem.raw + '%';
+                                }
+                            }
+                        }
+                    }
+                }
+            });
+        }
+
+        function showEmploymentChart() {
+            var ctx = document.getElementById('employmentChart').getContext('2d');
+            new Chart(ctx, {
+                type: 'pie',
+                data: {
+                    labels: ['Goods-producing', 'Services'],
+                    datasets: [{
+                        data: [21.1, 78.9],
+                        backgroundColor: ['#ff9999', '#66b3ff'],
+                        borderWidth: 1
+                    }]
+                },
+                options: {
+                    responsive: true,
+                    plugins: {
+                        legend: {
+                            position: 'top',
+                        }
+                    }
+                }
+            });
+        }
+
+        function showEmploymentDemographicsChart() {
+            var ctx = document.getElementById('employmentDemographicsChart').getContext('2d');
+            new Chart(ctx, {
+                type: 'pie',
+                data: {
+                    labels: ['Male', 'Female'],
+                    datasets: [{
+                        data: [49.0, 51.0],
+                        backgroundColor: ['#ff9999', '#66b3ff'],
+                        borderWidth: 1
+                    }]
+                },
+                options: {
+                    responsive: true,
+                    plugins: {
+                        legend: {
+                            position: 'top',
+                        }
+                    }
+                }
+            });
+
+            var ageCtx = document.createElement('canvas');
+            ageCtx.id = 'ageChart';
+            document.getElementById('employmentDemographics').appendChild(ageCtx);
+
+            new Chart(ageCtx, {
+                type: 'pie',
+                data: {
+                    labels: ['Ages 15-24', 'Ages 25-54', 'Ages 55+'],
+                    datasets: [{
+                        data: [13.2, 62.6, 24.1],
+                        backgroundColor: ['#ff9999', '#66b3ff', '#99ff99'],
+                        borderWidth: 1
+                    }]
+                },
+                options: {
+                    responsive: true,
+                    plugins: {
+                        legend: {
+                            position: 'top',
+                        }
+                    }
+                }
+            });
+        }
+
+        function showWageComparisonChart() {
+            var ctx = document.getElementById('wageComparisonChart').getContext('2d');
+            new Chart(ctx, {
+                type: 'bar',
+                data: {
+                    labels: ['Canada Average', 'NB Average', 'Male', 'Female'],
+                    datasets: [{
+                        label: 'Average Hourly Wage',
+                        data: [27.75, 23.49, 24.53, 22.46],
+                        backgroundColor: ['#ff9999', '#66b3ff', '#99ff99', '#ffcc99'],
+                        borderWidth: 1
+                    }]
+                },
+                options: {
+                    responsive: true,
+                    plugins: {
+                        legend: {
+                            position: 'top',
+                        }
+                    }
+                }
+            });
+        }
+    </script>
+</body>
+</html>
