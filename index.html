@@ -6,22 +6,39 @@
     <title>Sector Profiles Overview</title>
     <style>
         body {
-            font-family: Arial, sans-serif;
+            font-family: 'Roboto', sans-serif;
             margin: 0;
             padding: 0;
+            background-color: #f4f4f4;
         }
         .header {
-            background-color: #f8f9fa;
+            background-color: #007bff;
+            color: white;
             padding: 20px;
             text-align: center;
         }
         .header img {
             max-width: 150px;
         }
+        .navbar {
+            display: flex;
+            justify-content: center;
+            background-color: #0056b3;
+            padding: 10px;
+        }
+        .navbar a {
+            color: white;
+            text-decoration: none;
+            padding: 14px 20px;
+            text-align: center;
+        }
+        .navbar a:hover {
+            background-color: #003d7a;
+        }
         .title {
             margin: 20px 0;
             text-align: center;
-            font-size: 24px;
+            font-size: 28px;
             font-weight: bold;
         }
         .buttons {
@@ -37,6 +54,14 @@
             height: 150px;
             display: inline-block;
             vertical-align: top;
+            border: none;
+            border-radius: 10px;
+            background-color: #007bff;
+            color: white;
+            transition: background-color 0.3s ease;
+        }
+        .buttons button:hover {
+            background-color: #0056b3;
         }
         .dropdown {
             width: 200px;
@@ -64,7 +89,7 @@
             margin: 20px auto;
             max-width: 500px;
             text-align: left;
-            background-color: #f9f9f9;
+            background-color: white;
         }
         .info-box h2 {
             font-size: 20px;
@@ -101,6 +126,7 @@
             font-size: 16px;
         }
     </style>
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;500;700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://unpkg.com/leaflet@1.7.1/dist/leaflet.css" />
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
     <script src="https://unpkg.com/leaflet@1.7.1/dist/leaflet.js"></script>
@@ -110,16 +136,16 @@
         <img src="logo_with_text.png" alt="NBJobs Logo 1">
         <img src="logo.jpg" alt="NBJobs Logo 2">
     </div>
+    <div class="navbar">
+        <a href="#gdp" onclick="showContent('gdp')">GDP</a>
+        <a href="#businessOutlook" onclick="showContent('businessOutlook')">Business Outlook</a>
+        <a href="#employment" onclick="showContent('employment')">Employment</a>
+        <a href="#employmentDemographics" onclick="showContent('employmentDemographics')">Demographics</a>
+        <a href="#wageComparison" onclick="showContent('wageComparison')">Wage Comparison</a>
+        <a href="#map" onclick="showContent('map')">Regional Highlights</a>
+    </div>
     <div class="title">
         Sector Profiles Overview
-    </div>
-    <div class="buttons">
-        <button onclick="showContent('gdp')">GDP</button>
-        <button onclick="showContent('businessOutlook')">Business Outlook (2018-2027)</button>
-        <button onclick="showContent('employment')">Employment</button>
-        <button onclick="showContent('employmentDemographics')">Employment Demographics</button>
-        <button onclick="showContent('wageComparison')">Wage Comparison</button>
-        <button onclick="showContent('map')">Regional Highlights</button>
     </div>
     <div id="gdp" class="content chart-container">
         <h1>GDP (Goods-producing vs Services)</h1>
