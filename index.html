@@ -41,37 +41,24 @@
             font-size: 28px;
             font-weight: bold;
         }
-        .buttons {
-            text-align: center;
+        .icons {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
             margin: 20px 0;
         }
-        .buttons button {
-            padding: 20px 20px;
-            font-size: 16px;
-            margin: 5px;
-            cursor: pointer;
-            width: 150px;
-            height: 150px;
-            display: inline-block;
-            vertical-align: top;
-            border: none;
-            border-radius: 10px;
-            background-color: #007bff;
-            color: white;
-            transition: background-color 0.3s ease;
-        }
-        .buttons button:hover {
-            background-color: #0056b3;
-        }
-        .dropdown {
-            width: 200px;
-            margin: 20px auto;
+        .icons div {
             text-align: center;
+            margin: 10px;
+            cursor: pointer;
         }
-        .dropdown select {
-            width: 100%;
-            padding: 10px;
-            font-size: 16px;
+        .icons img {
+            width: 50px;
+            height: 50px;
+        }
+        .icons p {
+            margin: 5px 0 0;
+            font-size: 14px;
         }
         .content {
             display: none;
@@ -147,6 +134,84 @@
     <div class="title">
         Sector Profiles Overview
     </div>
+    <div class="icons">
+        <div onclick="showContent('agriculture')">
+            <img src="agriculture_icon.png" alt="Agriculture">
+            <p>Agriculture</p>
+        </div>
+        <div onclick="showContent('forestry')">
+            <img src="forestry_icon.png" alt="Forestry">
+            <p>Forestry</p>
+        </div>
+        <div onclick="showContent('fishing')">
+            <img src="fishing_icon.png" alt="Fishing">
+            <p>Fishing/Hunting</p>
+        </div>
+        <div onclick="showContent('mining')">
+            <img src="mining_icon.png" alt="Mining">
+            <p>Mining/Oil</p>
+        </div>
+        <div onclick="showContent('utilities')">
+            <img src="utilities_icon.png" alt="Utilities">
+            <p>Utilities</p>
+        </div>
+        <div onclick="showContent('construction')">
+            <img src="construction_icon.png" alt="Construction">
+            <p>Construction</p>
+        </div>
+        <div onclick="showContent('manufacturing')">
+            <img src="manufacturing_icon.png" alt="Manufacturing">
+            <p>Manufacturing</p>
+        </div>
+        <div onclick="showContent('wholesale')">
+            <img src="wholesale_icon.png" alt="Wholesale">
+            <p>Wholesale</p>
+        </div>
+        <div onclick="showContent('retail')">
+            <img src="retail_icon.png" alt="Retail">
+            <p>Retail</p>
+        </div>
+        <div onclick="showContent('transportation')">
+            <img src="transportation_icon.png" alt="Transportation">
+            <p>Transportation</p>
+        </div>
+        <div onclick="showContent('finance')">
+            <img src="finance_icon.png" alt="Finance">
+            <p>Finance</p>
+        </div>
+        <div onclick="showContent('professional')">
+            <img src="professional_icon.png" alt="Professional">
+            <p>Professional Services</p>
+        </div>
+        <div onclick="showContent('business')">
+            <img src="business_icon.png" alt="Business">
+            <p>Business Services</p>
+        </div>
+        <div onclick="showContent('educational')">
+            <img src="educational_icon.png" alt="Educational">
+            <p>Educational Services</p>
+        </div>
+        <div onclick="showContent('healthcare')">
+            <img src="healthcare_icon.png" alt="Healthcare">
+            <p>Healthcare Services</p>
+        </div>
+        <div onclick="showContent('information')">
+            <img src="information_icon.png" alt="Information">
+            <p>Information Services</p>
+        </div>
+        <div onclick="showContent('accommodation')">
+            <img src="accommodation_icon.png" alt="Accommodation">
+            <p>Accommodation Services</p>
+        </div>
+        <div onclick="showContent('public')">
+            <img src="public_icon.png" alt="Public">
+            <p>Public Administration</p>
+        </div>
+        <div onclick="showContent('other')">
+            <img src="other_icon.png" alt="Other">
+            <p>Other Services</p>
+        </div>
+    </div>
     <div id="gdp" class="content chart-container">
         <h1>GDP (Goods-producing vs Services)</h1>
         <canvas id="gdpChart"></canvas>
@@ -211,26 +276,6 @@
                 <p>10.0%</p>
             </div>
         </div>
-    </div>
-    <div class="dropdown">
-        <select>
-            <option value="">Select Industry Sector</option>
-            <option value="construction">Construction</option>
-            <option value="utilities">Utilities</option>
-            <option value="manufacturing">Manufacturing</option>
-            <option value="retail">Retail and Wholesale Trade</option>
-            <option value="transportation">Transportation and Warehousing</option>
-            <option value="information">Information, Culture, and Recreation</option>
-            <option value="finance">Finance, Insurance, Real Estate and Leasing</option>
-            <option value="professional">Professional, Scientific, and Technical Services</option>
-            <option value="business">Business, Building, and Other Support Services</option>
-            <option value="educational">Educational Services</option>
-            <option value="accommodation">Accommodation and Food Services</option>
-            <option value="healthcare">Healthcare and Social Assistance</option>
-            <option value="public">Public Administration</option>
-            <option value="other">Other Services</option>
-            <option value="natural_resources">Natural Resources</option>
-        </select>
     </div>
     <script>
         function showContent(contentId) {
