@@ -1,51 +1,21 @@
 /* style.css */
 
-/* استایل کلی برای بدنه چت‌بات */
-#bp-widget .bp-chat-container {
-  background-color: #f0f8ff; /* پس‌زمینه آبی کم‌رنگ */
-  border: 1px solid #007bff; /* حاشیه آبی تیره */
-  border-radius: 10px; /* گرد کردن گوشه‌ها */
+/* استایل برای دکمه شناور چت‌بات */
+#bp-web-widget {
+  background-image: url('https://res.cloudinary.com/dmyxtuea0/image/upload/v1720708398/chatbot_icon_r1wcmx.jpg'); /* لینک تصویر جدید آیکون */
+  background-size: cover; /* تصویر را به طور کامل بپوشاند */
+  background-repeat: no-repeat;
+  width: 60px; /* عرض آیکون */
+  height: 60px; /* ارتفاع آیکون */
+  border-radius: 50%; /* گرد کردن گوشه‌ها */
+  border: 2px solid #007bff; /* حاشیه آبی */
+  bottom: 20px; /* فاصله از پایین صفحه */
+  right: 20px; /* فاصله از سمت راست صفحه */
+  position: fixed;
+  z-index: 9999;
 }
 
-/* استایل هدر چت‌بات */
-#bp-widget .bp-header {
-  background-color: #007bff; /* پس‌زمینه آبی تیره */
-  color: #fff; /* رنگ متن سفید */
-  font-weight: bold; /* ضخیم کردن متن */
-  text-align: center; /* مرکز کردن متن */
-}
-
-/* استایل برای پیام‌های کاربر */
-#bp-widget .bp-message.user {
-  background-color: #007bff; /* پس‌زمینه پیام کاربر آبی تیره */
-  color: #fff; /* رنگ متن سفید */
-  border-radius: 10px; /* گرد کردن گوشه‌ها */
-  padding: 10px; /* فاصله داخلی */
-  margin: 5px; /* فاصله خارجی */
-}
-
-/* استایل برای پیام‌های ربات */
-#bp-widget .bp-message.bot {
-  background-color: #e6f7ff; /* پس‌زمینه پیام ربات آبی کم‌رنگ */
-  color: #333; /* رنگ متن تیره */
-  border-radius: 10px; /* گرد کردن گوشه‌ها */
-  padding: 10px; /* فاصله داخلی */
-  margin: 5px; /* فاصله خارجی */
-}
-
-/* استایل برای ورودی متن (کامپوزر) */
-#bp-widget .bp-composer {
-  background-color: #fff; /* پس‌زمینه سفید */
-  border-top: 1px solid #007bff; /* حاشیه بالایی آبی تیره */
-  padding: 10px; /* فاصله داخلی */
-}
-
-/* استایل برای دکمه ارسال پیام */
-#bp-widget .bp-send-button {
-  background-color: #007bff; /* پس‌زمینه آبی تیره */
-  color: #fff; /* رنگ متن سفید */
-  border: none; /* بدون حاشیه */
-  border-radius: 5px; /* گرد کردن گوشه‌ها */
-  padding: 5px 10px; /* فاصله داخلی */
-  cursor: pointer; /* تغییر شکل موس به حالت اشاره‌گر */
+/* مخفی کردن آیکون پیش‌فرض */
+#bp-web-widget .bp-floating-button {
+  display: none;
 }
