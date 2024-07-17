@@ -86,6 +86,7 @@
                 <textarea id="resume-input" placeholder="Paste your resume here..."></textarea>
                 <div class="buttons">
                     <button onclick="improveResume()">Improve Resume</button>
+                    <button onclick="goBack()">Back</button>
                 </div>
             </div>
         </div>
@@ -104,6 +105,10 @@
 
             const data = await response.json();
             document.getElementById('resume-input').value = data.improved_resume;
+        }
+
+        function goBack() {
+            window.history.back();
         }
     </script>
 </body>
