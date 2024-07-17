@@ -25,6 +25,9 @@ export default async function handler(req, res) {
             max_tokens: 500,
         });
 
+        // اضافه کردن console.log برای بررسی پاسخ
+        console.log('OpenAI response:', response);
+
         res.status(200).json({ improved_resume: response.data.choices[0].text.trim() });
     } catch (error) {
         console.error('OpenAI API error:', error);
