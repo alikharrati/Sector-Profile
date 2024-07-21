@@ -17,7 +17,7 @@ def gpt():
         data = request.json
         prompt = data.get('prompt')
         response = openai.Completion.create(
-            model="text-davinci-003",
+            engine="davinci",
             prompt=prompt,
             max_tokens=150
         )
@@ -35,7 +35,7 @@ def resume():
         # درخواست به GPT برای تصحیح رزومه
         prompt = f"Please correct and improve the following resume text:\n\n{text}"
         response = openai.Completion.create(
-            model="text-davinci-003",
+            engine="davinci",
             prompt=prompt,
             max_tokens=500
         )
