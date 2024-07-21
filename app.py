@@ -15,13 +15,13 @@ def home():
 def gpt():
     try:
         data = request.json
-        messages = data.get('messages', [])
-        response = openai.ChatCompletion.create(
-            model="gpt-3.5-turbo-instruct",
-            messages=messages,
+        prompt = data.get('prompt')
+        response = openai.Completion.create(
+            model="text-davinci-003",
+            prompt=prompt,
             max_tokens=150
         )
-        return jsonify({'response': response['choices'][0]['message']['content']})
+        return jsonify({'response': response.choices[0].text.strip()})
     except Exception as e:
         app.logger.error(f"Error processing request: {e}")
         return jsonify({'error': str(e)}), 500
@@ -33,17 +33,14 @@ def resume():
         text = data.get('resume_text', '')
 
         # درخواست به GPT برای تصحیح رزومه
-        messages = [
-            {"role": "system", "content": "You are a helpful assistant."},
-            {"role": "user", "content": f"Please correct and improve the following resume text:\n\n{text}"}
-        ]
-        response = openai.ChatCompletion.create(
-            model="gpt-3.5-turbo-instruct",
-            messages=messages,
+        prompt = f"Please correct and improve the following resume text:\n\n{text}"
+        response = openai.Completion.create(
+            model="text-davinci-003",
+            prompt=prompt,
             max_tokens=500
         )
 
-        corrected_text = response['choices'][0]['message']['content'].strip()
+        corrected_text = response.choices[0].text.strip()
         return jsonify({'improved_resume': corrected_text})
     except Exception as e:
         app.logger.error(f"Error processing request: {e}")
