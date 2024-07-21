@@ -16,12 +16,12 @@ def gpt():
     try:
         data = request.json
         messages = data.get('messages', [])
-        response = openai.ChatCompletion.create(
-            model="gpt-4",
+        response = openai.Completion.create(
+            model="gpt-3.5-turbo",
             messages=messages,
             max_tokens=150
         )
-        return jsonify({'response': response['choices'][0]['message']['content']})
+        return jsonify({'response': response.choices[0].text})
     except Exception as e:
         app.logger.error(f"Error processing request: {e}")
         return jsonify({'error': str(e)}), 500
@@ -37,13 +37,13 @@ def resume():
             {"role": "system", "content": "You are a helpful assistant."},
             {"role": "user", "content": f"Please correct and improve the following resume text:\n\n{text}"}
         ]
-        response = openai.ChatCompletion.create(
-            model="gpt-4",
+        response = openai.Completion.create(
+            model="gpt-3.5-turbo",
             messages=messages,
             max_tokens=500
         )
 
-        corrected_text = response['choices'][0]['message']['content'].strip()
+        corrected_text = response.choices[0].text.strip()
         return jsonify({'improved_resume': corrected_text})
     except Exception as e:
         app.logger.error(f"Error processing request: {e}")
