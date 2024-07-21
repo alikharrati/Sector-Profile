@@ -13,37 +13,45 @@ def home():
 
 @app.route('/gpt', methods=['POST'])
 def gpt():
-    data = request.json
-    prompt = data.get('prompt')
-    response = openai.Completion.create(
-        engine="text-davinci-003",
-        prompt=prompt,
-        max_tokens=150
-    )
-    return jsonify({'response': response.choices[0].text.strip()})
+    try:
+        data = request.json
+        messages = data.get('messages')
+        response = openai.ChatCompletion.create(
+            model="gpt-3.5-turbo",
+            messages=messages,
+            max_tokens=150
+        )
+        return jsonify({'response': response.choices[0].message['content']})
+    except Exception as e:
+        app.logger.error(f"Error processing request: {e}")
+        return jsonify({'error': str(e)}), 500
 
 @app.route('/resume', methods=['POST'])
 def resume():
-    # دریافت داده‌های درخواست
-    data = request.json
-    text = data.get('resume_text', '')
+    try:
+        data = request.json
+        text = data.get('resume_text', '')
 
-    # درخواست به GPT برای تصحیح رزومه
-    prompt = f"Please correct and improve the following resume text:\n\n{text}"
-    response = openai.Completion.create(
-        engine="text-davinci-003",
-        prompt=prompt,
-        max_tokens=500  # می‌توانید این مقدار را بر اساس نیاز خود تنظیم کنید
-    )
+        # درخواست به GPT برای تصحیح رزومه
+        prompt = f"Please correct and improve the following resume text:\n\n{text}"
+        response = openai.ChatCompletion.create(
+            model="gpt-3.5-turbo",
+            messages=[
+                {"role": "system", "content": "You are a helpful assistant."},
+                {"role": "user", "content": prompt}
+            ],
+            max_tokens=500
+        )
 
-    # استخراج متن تصحیح شده از پاسخ
-    corrected_text = response.choices[0].text.strip()
-    return jsonify({'improved_resume': corrected_text})
+        corrected_text = response.choices[0].message['content'].strip()
+        return jsonify({'improved_resume': corrected_text})
+    except Exception as e:
+        app.logger.error(f"Error processing request: {e}")
+        return jsonify({'error': str(e)}), 500
 
 @app.route('/resume-editor')
 def resume_editor():
     return send_from_directory(app.static_folder, 'resume-editor.html')
 
-# اجرای سرور در محیط توسعه
 if __name__ == '__main__':
     app.run(host='0.0.0.0', port=5000)
