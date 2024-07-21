@@ -1,8 +1,9 @@
-from flask import Flask, request, jsonify
+from flask import Flask, request, jsonify, send_from_directory
 import openai
 import os
 
-app = Flask(__name__)
+app = Flask(__name__, static_folder='docs')
+
 openai.api_key = os.getenv("OPENAI_API_KEY")
 
 @app.route('/')
@@ -22,8 +23,8 @@ def gpt():
 
 @app.route('/resume', methods=['POST'])
 def resume():
-    file = request.files['file']
-    text = file.read().decode('utf-8')
+    data = request.json
+    text = data.get('resume_text', '')
 
     # درخواست به GPT برای تصحیح رزومه
     prompt = f"Please correct and improve the following resume text:\n\n{text}"
@@ -34,7 +35,11 @@ def resume():
     )
 
     corrected_text = response.choices[0].text.strip()
-    return jsonify({'corrected_resume': corrected_text})
+    return jsonify({'improved_resume': corrected_text})
+
+@app.route('/resume-editor')
+def resume_editor():
+    return send_from_directory(app.static_folder, 'resume-editor.html')
 
 if __name__ == '__main__':
     app.run(host='0.0.0.0', port=5000)
