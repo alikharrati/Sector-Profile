@@ -7,12 +7,10 @@ app = Flask(__name__, static_folder='docs')
 # تنظیم کلید API OpenAI از متغیر محیطی
 openai.api_key = os.getenv("OPENAI_API_KEY")
 
-# مسیر پایه برای تست
 @app.route('/')
 def home():
     return "Welcome to the Sector Profile API"
 
-# مسیر برای پردازش درخواست‌های مربوط به GPT
 @app.route('/gpt', methods=['POST'])
 def gpt():
     data = request.json
@@ -24,7 +22,6 @@ def gpt():
     )
     return jsonify({'response': response.choices[0].text.strip()})
 
-# مسیر برای پردازش و تصحیح رزومه‌ها
 @app.route('/resume', methods=['POST'])
 def resume():
     # دریافت داده‌های درخواست
@@ -43,7 +40,6 @@ def resume():
     corrected_text = response.choices[0].text.strip()
     return jsonify({'improved_resume': corrected_text})
 
-# مسیر برای سرو کردن فایل HTML رزومه ادیتور
 @app.route('/resume-editor')
 def resume_editor():
     return send_from_directory(app.static_folder, 'resume-editor.html')
