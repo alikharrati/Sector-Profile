@@ -21,7 +21,7 @@ def gpt():
             messages=messages,
             max_tokens=150
         )
-        return jsonify({'response': response.choices[0].message['content']})
+        return jsonify({'response': response['choices'][0]['message']['content']})
     except Exception as e:
         app.logger.error(f"Error processing request: {e}")
         return jsonify({'error': str(e)}), 500
@@ -43,7 +43,7 @@ def resume():
             max_tokens=500
         )
 
-        corrected_text = response.choices[0].message['content'].strip()
+        corrected_text = response['choices'][0]['message']['content'].strip()
         return jsonify({'improved_resume': corrected_text})
     except Exception as e:
         app.logger.error(f"Error processing request: {e}")
