@@ -16,12 +16,12 @@ def gpt():
     try:
         data = request.json
         messages = data.get('messages', [])
-        response = openai.Completion.create(
+        response = openai.ChatCompletion.create(
             model="gpt-3.5-turbo",
             messages=messages,
             max_tokens=150
         )
-        return jsonify({'response': response.choices[0].text})
+        return jsonify({'response': response.choices[0].message['content']})
     except Exception as e:
         app.logger.error(f"Error processing request: {e}")
         return jsonify({'error': str(e)}), 500
@@ -37,13 +37,13 @@ def resume():
             {"role": "system", "content": "You are a helpful assistant."},
             {"role": "user", "content": f"Please correct and improve the following resume text:\n\n{text}"}
         ]
-        response = openai.Completion.create(
+        response = openai.ChatCompletion.create(
             model="gpt-3.5-turbo",
             messages=messages,
             max_tokens=500
         )
 
-        corrected_text = response.choices[0].text.strip()
+        corrected_text = response.choices[0].message['content'].strip()
         return jsonify({'improved_resume': corrected_text})
     except Exception as e:
         app.logger.error(f"Error processing request: {e}")
@@ -52,6 +52,23 @@ def resume():
 @app.route('/resume-editor')
 def resume_editor():
     return send_from_directory(app.static_folder, 'resume-editor.html')
+
+# مسیر تست برای بررسی ارتباط با OpenAI API
+@app.route('/test-openai', methods=['GET'])
+def test_openai():
+    try:
+        response = openai.ChatCompletion.create(
+            model="gpt-3.5-turbo",
+            messages=[
+                {"role": "system", "content": "You are a helpful assistant."},
+                {"role": "user", "content": "Can you respond to this message?"}
+            ],
+            max_tokens=50
+        )
+        return jsonify({'response': response.choices[0].message['content']})
+    except Exception as e:
+        app.logger.error(f"Error processing request: {e}")
+        return jsonify({'error': str(e)}), 500
 
 if __name__ == '__main__':
     app.run(host='0.0.0.0', port=5000)
