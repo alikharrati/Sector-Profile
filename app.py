@@ -80,9 +80,8 @@ def home():
                 font-size: 18px;
             }
             .chart-container {
-                float: left;
-                margin-right: 270px;
-                width: calc(100% - 270px);
+                margin: 20px;
+                width: calc(100% - 40px);
             }
         </style>
     </head>
