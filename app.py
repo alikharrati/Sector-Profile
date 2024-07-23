@@ -8,7 +8,7 @@ app = Flask(__name__)
 @app.route('/')
 def index():
     # Load the dataset
-    file_path = 'path_to_your_csv/job_forecast_transformed_dataset.csv'  # Adjust this path if needed
+    file_path = 'job_forecast_transformed_dataset.csv'  # Make sure this path is correct
     transformed_dataset = pd.read_csv(file_path)
 
     # Aggregate data to get total employment by sector
