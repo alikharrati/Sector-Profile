@@ -73,80 +73,16 @@ def home():
                 text-align: left;
                 font-size: 28px;
                 font-weight: bold;
-                margin-right: 270px; /* Adjusted to avoid sidebar */
             }
             .description {
                 text-align: left;
                 margin: 20px;
                 font-size: 18px;
-                margin-right: 270px; /* Adjusted to avoid sidebar */
-            }
-            .sidebar {
-                position: fixed;
-                right: 0;
-                top: calc(2cm + 10px); /* Adjusted to start 2cm below the blue navbar */
-                height: calc(100% - 2cm - 10px); /* Adjusted height to fill the remaining space */
-                width: 250px; /* Increased width */
-                background-color: #f7f9fc;
-                overflow-y: scroll;
-                border-left: 1px solid #ccc;
-                padding-top: 20px;
-            }
-            .sidebar div {
-                text-align: center;
-                margin: 10px;
-                cursor: pointer;
-                padding: 10px 0;
-            }
-            .sidebar img {
-                width: 50px;
-                height: 50px;
-            }
-            .sidebar p {
-                margin: 5px 0 0;
-                font-size: 14px;
-                color: #002857;
-            }
-            .accommodation-section {
-                display: none;
-                margin: 20px auto;
-                text-align: center;
-            }
-            .accommodation-section img {
-                max-width: 100%;
-                height: auto;
-            }
-            .buttons {
-                margin-top: 20px;
-            }
-            .buttons button {
-                margin: 10px;
-                padding: 10px 20px;
-                font-size: 16px;
-                cursor: pointer;
-                background-color: #002857;
-                color: white;
-                border: none;
-                border-radius: 5px;
-            }
-            .buttons button:hover {
-                background-color: #004080;
-            }
-            .dropdown-content {
-                display: none;
-                position: absolute;
-                background-color: #f4f4f4;
-                min-width: 160px;
-                box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
-                z-index: 1;
-            }
-            .navbar a:hover .dropdown-content {
-                display: block;
             }
             .chart-container {
                 float: left;
                 margin: 20px;
-                width: calc(100% - 290px); /* Adjusted to avoid sidebar */
+                width: calc(100% - 270px); /* Adjusted to avoid sidebar */
             }
         </style>
     </head>
@@ -232,4 +168,13 @@ def test_openai():
             model="gpt-3.5-turbo",
             messages=[
                 {"role": "system", "content": "You are a helpful assistant."},
-                {"role":
+                {"role": "user", "content": "Can you respond to this message?"}
+            ]
+        )
+        return jsonify({'response': response['choices'][0]['message']['content']})
+    except Exception as e:
+        app.logger.error(f"Error processing request: {e}")
+        return jsonify({'error': str(e)}), 500
+
+if __name__ == '__main__':
+    app.run(host='0.0.0.0', port=5000)
