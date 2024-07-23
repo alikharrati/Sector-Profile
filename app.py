@@ -1,4 +1,3 @@
-
 from flask import Flask, request, jsonify, render_template_string, send_from_directory
 import openai
 import os
@@ -13,66 +12,6 @@ openai.api_key = os.getenv("OPENAI_API_KEY")
 
 @app.route('/')
 def home():
-    return "Welcome to the Sector Profile API"
-
-@app.route('/gpt', methods=['POST'])
-def gpt():
-    try:
-        data = request.json
-        messages = data.get('messages', [])
-        response = openai.ChatCompletion.create(
-            model="gpt-3.5-turbo",
-            messages=messages
-        )
-        return jsonify({'response': response['choices'][0]['message']['content']})
-    except Exception as e:
-        app.logger.error(f"Error processing request: {e}")
-        return jsonify({'error': str(e)}), 500
-
-@app.route('/resume', methods=['POST'])
-def resume():
-    try:
-        data = request.json
-        text = data.get('resume_text', '')
-
-        # درخواست به GPT برای تصحیح رزومه
-        messages = [
-            {"role": "system", "content": "You are a helpful assistant."},
-            {"role": "user", "content": f"Please correct and improve the following resume text:\n\n{text}"}
-        ]
-        response = openai.ChatCompletion.create(
-            model="gpt-3.5-turbo",
-            messages=messages
-        )
-
-        corrected_text = response['choices'][0]['message']['content'].strip()
-        return jsonify({'improved_resume': corrected_text})
-    except Exception as e:
-        app.logger.error(f"Error processing request: {e}")
-        return jsonify({'error': str(e)}), 500
-
-@app.route('/resume-editor')
-def resume_editor():
-    return send_from_directory(app.static_folder, 'resume-editor.html')
-
-# مسیر تست برای بررسی ارتباط با OpenAI API
-@app.route('/test-openai', methods=['GET'])
-def test_openai():
-    try:
-        response = openai.ChatCompletion.create(
-            model="gpt-3.5-turbo",
-            messages=[
-                {"role": "system", "content": "You are a helpful assistant."},
-                {"role": "user", "content": "Can you respond to this message?"}
-            ]
-        )
-        return jsonify({'response': response['choices'][0]['message']['content']})
-    except Exception as e:
-        app.logger.error(f"Error processing request: {e}")
-        return jsonify({'error': str(e)}), 500
-
-@app.route('/chart')
-def chart():
     # Load the dataset
     file_path = 'job_forecast_transformed_dataset.csv'  # Make sure this path is correct
     transformed_dataset = pd.read_csv(file_path)
@@ -172,6 +111,62 @@ def chart():
     '''
     
     return render_template_string(html_template, graph_html=graph_html)
+
+@app.route('/gpt', methods=['POST'])
+def gpt():
+    try:
+        data = request.json
+        messages = data.get('messages', [])
+        response = openai.ChatCompletion.create(
+            model="gpt-3.5-turbo",
+            messages=messages
+        )
+        return jsonify({'response': response['choices'][0]['message']['content']})
+    except Exception as e:
+        app.logger.error(f"Error processing request: {e}")
+        return jsonify({'error': str(e)}), 500
+
+@app.route('/resume', methods=['POST'])
+def resume():
+    try:
+        data = request.json
+        text = data.get('resume_text', '')
+
+        # درخواست به GPT برای تصحیح رزومه
+        messages = [
+            {"role": "system", "content": "You are a helpful assistant."},
+            {"role": "user", "content": f"Please correct and improve the following resume text:\\n\\n{text}"}
+        ]
+        response = openai.ChatCompletion.create(
+            model="gpt-3.5-turbo",
+            messages=messages
+        )
+
+        corrected_text = response['choices'][0]['message']['content'].strip()
+        return jsonify({'improved_resume': corrected_text})
+    except Exception as e:
+        app.logger.error(f"Error processing request: {e}")
+        return jsonify({'error': str(e)}), 500
+
+@app.route('/resume-editor')
+def resume_editor():
+    return send_from_directory(app.static_folder, 'resume-editor.html')
+
+# مسیر تست برای بررسی ارتباط با OpenAI API
+@app.route('/test-openai', methods=['GET'])
+def test_openai():
+    try:
+        response = openai.ChatCompletion.create(
+            model="gpt-3.5-turbo",
+            messages=[
+                {"role": "system", "content": "You are a helpful assistant."},
+                {"role": "user", "content": "Can you respond to this message?"}
+            ]
+        )
+        return jsonify({'response': response['choices'][0]['message']['content']})
+    except Exception as e:
+        app.logger.error(f"Error processing request: {e}")
+        return jsonify({'error': str(e)}), 500
 
 if __name__ == '__main__':
     app.run(host='0.0.0.0', port=5000)
