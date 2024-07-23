@@ -164,7 +164,7 @@ def home():
             <a href="javascript:void(0)">FOR EMPLOYERS
                 <div class="dropdown-content"></div>
             </a>
-            <a href="resume-editor.html">Resume Editor</a>
+            <a href="resume-editor.html">Resume Editor</a> <!-- لینک جدید برای ویرایش رزومه -->
         </div>
         <div class="title">
             Sector Profiles Overview
@@ -232,13 +232,4 @@ def test_openai():
             model="gpt-3.5-turbo",
             messages=[
                 {"role": "system", "content": "You are a helpful assistant."},
-                {"role": "user", "content": "Can you respond to this message?"}
-            ]
-        )
-        return jsonify({'response': response['choices'][0]['message']['content']})
-    except Exception as e:
-        app.logger.error(f"Error processing request: {e}")
-        return jsonify({'error': str(e)}), 500
-
-if __name__ == '__main__':
-    app.run(host='0.0.0.0', port=5000)
+                {"role":
