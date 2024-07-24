@@ -1,0 +1,273 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Accommodation Sector</title>
+    <style>
+        body {
+            font-family: 'Roboto', sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: #f4f4f4;
+        }
+        .header {
+            background-color: #007bff;
+            color: white;
+            padding: 20px;
+            text-align: center;
+        }
+        .header a {
+            color: white;
+            text-decoration: none;
+            font-size: 20px;
+        }
+        .content {
+            text-align: center;
+            margin: 20px;
+        }
+        .tabs {
+            display: flex;
+            justify-content: center;
+            margin-top: 20px;
+        }
+        .tabs button {
+            margin: 10px;
+            padding: 10px 20px;
+            font-size: 16px;
+            cursor: pointer;
+            background-color: #007bff;
+            color: white;
+            border: none;
+            border-radius: 5px;
+        }
+        .tabs button:hover {
+            background-color: #0056b3;
+        }
+        .section {
+            display: none;
+            background-color: white;
+            border-radius: 8px;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+            margin: 20px auto;
+            padding: 20px;
+            max-width: 800px;
+            text-align: left;
+        }
+        .section h2 {
+            font-size: 24px;
+            margin-bottom: 10px;
+        }
+        .section p {
+            margin: 10px 0;
+            line-height: 1.6;
+        }
+        .section ul {
+            margin: 10px 0;
+            padding-left: 20px;
+        }
+        .section ul li {
+            margin: 5px 0;
+        }
+        .map-section {
+            text-align: center;
+        }
+        .map-section img {
+            width: 100px;
+            cursor: pointer;
+            margin: 10px;
+        }
+        .map-info {
+            display: none;
+            text-align: left;
+        }
+        .outlook-images {
+            display: flex;
+            justify-content: space-around;
+            align-items: center;
+            margin-top: 20px;
+        }
+        .outlook-images img {
+            width: 150px;
+        }
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 20px 0;
+        }
+        table, th, td {
+            border: 1px solid black;
+        }
+        th, td {
+            padding: 10px;
+            text-align: left;
+        }
+        th {
+            background-color: #f4f4f4;
+        }
+        /* Styles for the map */
+        #map {
+            position: relative;
+            width: 400px;
+            height: 400px;
+            margin: auto;
+            background-image: url('DEMOGRAFIC new.jpg');
+            background-size: cover;
+            background-repeat: no-repeat;
+        }
+        .region {
+            position: absolute;
+            opacity: 0;
+            transition: opacity 0.3s, transform 0.3s;
+            cursor: pointer;
+        }
+        .region:hover {
+            opacity: 0.5;
+            transform: scale(1.1); /* Slightly enlarge the region */
+            z-index: 10; /* Bring the region to the front */
+        }
+        #region1 {
+            top: 10%;
+            left: 25%;
+            width: 50%;
+            height: 20%;
+        }
+        #region2 {
+            top: 30%;
+            left: 60%;
+            width: 30%;
+            height: 30%;
+        }
+        #region3 {
+            top: 50%;
+            left: 25%;
+            width: 50%;
+            height: 20%;
+        }
+        #region4 {
+            top: 10%;
+            left: 0%;
+            width: 25%;
+            height: 40%;
+        }
+        #region5 {
+            top: 70%;
+            left: 30%;
+            width: 50%;
+            height: 30%;
+        }
+        .tooltip {
+            position: absolute;
+            background: #fff;
+            border: 1px solid #333;
+            padding: 5px;
+            display: none;
+            pointer-events: none;
+        }
+    </style>
+    <script>
+        function showSection(sectionId) {
+            document.querySelectorAll('.section').forEach(section => {
+                section.style.display = 'none';
+            });
+            document.getElementById(sectionId).style.display = 'block';
+        }
+
+        function showInfo(region) {
+            document.querySelectorAll('.map-info').forEach(info => {
+                info.style.display = 'none';
+            });
+            document.getElementById(region).style.display = 'block';
+        }
+        
+        // Script for the interactive map
+        document.addEventListener('DOMContentLoaded', function () {
+            const regions = document.querySelectorAll('.region');
+            const tooltip = document.getElementById('tooltip');
+
+            regions.forEach(region => {
+                region.addEventListener('mouseenter', (e) => {
+                    const info = e.target.getAttribute('data-info');
+                    tooltip.innerHTML = info;
+                    tooltip.style.display = 'block';
+                });
+
+                region.addEventListener('mousemove', (e) => {
+                    tooltip.style.top = `${e.pageY + 10}px`;
+                    tooltip.style.left = `${e.pageX + 10}px`;
+                });
+
+                region.addEventListener('mouseleave', () => {
+                    tooltip.style.display = 'none';
+                });
+            });
+        });
+    </script>
+</head>
+<body>
+    <div class="header">
+        <a href="index.html">Back to Main</a>
+    </div>
+    <div class="content">
+        <h1>Accommodation Sector</h1>
+        <div class="tabs">
+            <button onclick="showSection('sector-profile')">Sector Profile</button>
+            <button onclick="showSection('lmi')">LMI</button>
+            <button onclick="showSection('business-outlook')">Business Outlook</button>
+        </div>
+        <div id="sector-profile" class="section">
+            <h2>Overview</h2>
+            <p>The accommodation sector includes businesses that provide lodging services, such as hotels, motels, and resorts. This sector plays a crucial role in the tourism industry by offering a place for travelers to stay.</p>
+            <h2>Industry Statistics</h2>
+            <p>In 2019, the accommodation and food services sector represented 2.4% of New Brunswick’s GDP, contributing $0.7 billion. This sector employed 21,900 people, showing a 0.5% increase from 2010.</p>
+        </div>
+        <div id="lmi" class="section">
+            <h2>Most Attractive Jobs in This Sector</h2>
+            <table>
+                <tr>
+                    <th>Occupation</th>
+                    <th>Employed</th>
+                </tr>
+                <tr>
+                    <td>#65201 Food counter attendants, kitchen helpers and related support occupations</td>
+                    <td>1,281</td>
+                </tr>
+                <tr>
+                    <td>#60030 Restaurant and food service managers</td>
+                    <td>1,049</td>
+                </tr>
+                <tr>
+                    <td>#63200 Cooks</td>
+                    <td>903</td>
+                </tr>
+                <tr>
+                    <td>#62020 Food service supervisors</td>
+                    <td>375</td>
+                </tr>
+                <tr>
+                    <td>#65200 Food and beverage servers</td>
+                    <td>358</td>
+                </tr>
+            </table>
+            <h2>Employment by Region</h2>
+            <div id="map">
+                <div class="region" id="region1" data-info="Northeast (Campbellton-Miramichi): 3,670"></div>
+                <div class="region" id="region2" data-info="Southeast (Moncton-Richibucto): 6,145"></div>
+                <div class="region" id="region3" data-info="Central (Fredericton-Oromocto): 4,005"></div>
+                <div class="region" id="region4" data-info="Northwest (Edmundston-Woodstock): 1,820"></div>
+                <div class="region" id="region5" data-info="Southwest (Saint John-St. Stephen): 4,610"></div>
+            </div>
+            <div class="tooltip" id="tooltip"></div>
+        </div>
+        <div id="business-outlook" class="section">
+            <h2>Business Outlook (2018-2027)</h2>
+            <div class="outlook-images">
+                <img src="accomodation GDP.jpg" alt="Real GDP">
+                <img src="accomodation employment.jpg" alt="Employment">
+                <img src="accomodation job.jpg" alt="Job Openings">
+            </div>
+        </div>
+    </div>
+</body>
+</html>
+
