@@ -1,6 +1,15 @@
 function showAccommodation() {
     var accSection = document.querySelector('.accommodation-section');
+    var contentSection = document.querySelector('.content');
     accSection.style.display = 'block';
+    contentSection.style.display = 'none';
+}
+
+function hideAccommodation() {
+    var accSection = document.querySelector('.accommodation-section');
+    var contentSection = document.querySelector('.content');
+    accSection.style.display = 'none';
+    contentSection.style.display = 'block';
 }
 
 // Function to load and display the employment chart

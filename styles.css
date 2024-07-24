@@ -21,18 +21,18 @@ body {
 .navbar a:hover {
     background-color: #004080;
 }
-.title {
+.content {
     margin: 20px;
+    padding-right: 280px; /* Add padding to avoid the sidebar */
+}
+.title {
     text-align: left;
     font-size: 28px;
     font-weight: bold;
-    margin-right: 270px; /* Adjusted to avoid sidebar */
 }
 .description {
     text-align: left;
-    margin: 20px;
     font-size: 18px;
-    margin-right: 270px; /* Adjusted to avoid sidebar */
 }
 .sidebar {
     position: fixed;
