@@ -1,29 +1,35 @@
-from flask import Blueprint, request, jsonify
 import openai
+import streamlit as st
 import os
-
-improve_resume_bp = Blueprint('improve_resume', __name__)
 
 # Set your OpenAI API key from environment variable
 openai.api_key = os.getenv('OPENAI_API_KEY')
 
+# Initialize the Streamlit session state if not already initialized
+if 'messages' not in st.session_state:
+    st.session_state.messages = []
+
 def chat_gpt(prompt):
+    # Append user message to session state
+    st.session_state.messages.append({"role": "user", "content": prompt})
+    st.chat_message("user").write(prompt)
+    
+    # Create a chat completion
     response = openai.ChatCompletion.create(
-        model="gpt-4-turbo",
-        messages=[
-            {"role": "user", "content": prompt}
-        ]
+        model="gpt-3.5-turbo",
+        messages=st.session_state.messages
     )
-    return response.choices[0].message['content'].strip()
+    
+    # Extract and display the assistant's response
+    assistant_message = response.choices[0].message['content'].strip()
+    st.session_state.messages.append({"role": "assistant", "content": assistant_message})
+    st.chat_message("assistant").write(assistant_message)
 
-@improve_resume_bp.route('/api/improve-resume', methods=['POST'])
-def improve_resume():
-    try:
-        data = request.json
-        resume_text = data['resume_text']
+# Streamlit interface
+st.title("Chat with GPT-3.5-turbo")
+prompt = st.text_input("You: ", key="user_input")
 
-        improved_resume = chat_gpt(f"Improve the following resume:\n\n{resume_text}")
-        return jsonify({'improved_resume': improved_resume})
+if st.button("Send"):
+    if prompt:
+        chat_gpt(prompt)
 
-    except Exception as e:
-        return jsonify({'error': str(e)}), 500
