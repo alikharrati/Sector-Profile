@@ -1,7 +1,7 @@
 services:
   - type: web
-    name: flask-app
-    env: python
-    plan: free
+    name: my-web-service
+    envVars:
+      - key: OPENAI_API_KEY
     buildCommand: "pip install -r requirements.txt"
     startCommand: "gunicorn app:app"
