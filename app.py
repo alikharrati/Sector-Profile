@@ -1,10 +1,15 @@
-from flask import Flask, request, jsonify
+from flask import Flask, request, jsonify, send_from_directory
 import openai
+import os
 
 app = Flask(__name__)
 
 # Set your OpenAI API key here
 openai.api_key = 'your_openai_api_key'
+
+@app.route('/')
+def index():
+    return send_from_directory(os.path.join(app.root_path, 'static'), 'resume-editor.html')
 
 @app.route('/api/improve-resume', methods=['POST'])
 def improve_resume():
