@@ -13,14 +13,11 @@ def improve_resume():
         data = request.json
         resume_text = data['resume_text']
 
-
         response = openai.Completion.create(
-            engine="text-davinci-003",
+            model="text-davinci-003",
             prompt="You are a helpful assistant. Tell me a joke.",
             max_tokens=150
-            ],
-          
-        )
+)
 
         improved_resume = response.choices[0].message['content'].strip()
         return jsonify({'improved_resume': improved_resume})
