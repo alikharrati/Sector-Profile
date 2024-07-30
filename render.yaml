@@ -1,7 +1,0 @@
-services:
-  - type: web
-    name: Sector-Profile
-    envVars:
-      - key: OPENAI_API_KEY
-    buildCommand: "pip install -r requirements.txt"
-    startCommand: "streamlit run app.py"
