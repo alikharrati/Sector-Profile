@@ -9,7 +9,7 @@ openai.api_key = 'your_openai_api_key'
 
 @app.route('/')
 def index():
-    return send_from_directory(os.path.join(app.root_path, 'static'), 'resume-editor.html')
+    return send_from_directory('docs', 'resume-editor.html')
 
 @app.route('/api/improve-resume', methods=['POST'])
 def improve_resume():
