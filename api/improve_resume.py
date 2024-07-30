@@ -13,7 +13,7 @@ def improve_resume():
         data = request.json
         resume_text = data['resume_text']
 
-        response = openai.ChatCompletion.create(
+        response = client.chat.completions.create(
             model="gpt-3.5-turbo",  # Specify the model you are using
             messages=[
                 {"role": "system", "content": "You are a helpful assistant."},
