@@ -13,13 +13,13 @@ def improve_resume():
         data = request.json
         resume_text = data['resume_text']
 
-        response = openai.Chat.create(
-            model="gpt-3.5-turbo",  # Specify the model you are using
-            messages=[
-                {"role": "system", "content": "You are a helpful assistant."},
-                {"role": "user", "content": f"Improve the following resume:\n\n{resume_text}"}
+
+        response = openai.Completion.create(
+            engine="text-davinci-003",
+            prompt="You are a helpful assistant. Tell me a joke.",
+            max_tokens=150
             ],
-            max_tokens=1000
+          
         )
 
         improved_resume = response.choices[0].message['content'].strip()
