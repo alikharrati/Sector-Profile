@@ -1,7 +1,7 @@
 services:
   - type: web
-    name: my-web-service
+    name: Sector-Profile
     envVars:
       - key: OPENAI_API_KEY
     buildCommand: "pip install -r requirements.txt"
-    startCommand: "gunicorn app:app"
+    startCommand: "streamlit run app.py"
