@@ -22,7 +22,7 @@ def chat_gpt(prompt):
         st.write(f"User: {prompt}")
         
         # Create a chat completion
-        response = openai.ChatCompletion.create(
+        response = openai.Chat.Completion.create(
             model="gpt-3.5-turbo",
             messages=st.session_state.messages
         )
