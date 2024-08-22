@@ -3,7 +3,6 @@ from fastapi.staticfiles import StaticFiles
 from pydantic import BaseModel
 import openai
 import os
-from api.improve_resume import improve_resume_bp
 
 # تنظیم کلید API از محیط
 openai.api_key = os.getenv("OPENAI_API_KEY")
@@ -18,13 +17,11 @@ app.mount("/docs", StaticFiles(directory="docs"), name="docs")
 async def read_index():
     return {"message": "Go to /docs/resume-editor.html to access the resume editor."}
 
-# شامل کردن بلوپرینت
-app.include_router(improve_resume_bp)
-
-# پیاده‌سازی مدیریت درخواست‌های بهبود رزومه (در فایل improve_resume.py قرار دارد)
+# تعریف مدل ورودی داده‌ها
 class ResumeInput(BaseModel):
     resume_text: str
 
+# تعریف endpoint API برای بهبود رزومه
 @app.post("/api/improve-resume")
 async def improve_resume(input_data: ResumeInput):
     try:
@@ -39,5 +36,8 @@ async def improve_resume(input_data: ResumeInput):
         improved_resume = response.choices[0].message['content'].strip()
         return {"improved_resume": improved_resume}
     except Exception as e:
-        raise HTTPException(status_code=500, detail=str(e))
+        # لاگ کردن پیام خطا در کنسول
+        print(f"Error occurred during the API call: {str(e)}")
+        raise HTTPException(status_code=500, detail="Internal Server Error")
+
 
