@@ -25,8 +25,8 @@ class ResumeInput(BaseModel):
 @app.post("/api/improve-resume")
 async def improve_resume(input_data: ResumeInput):
     try:
-        # ارسال درخواست به OpenAI API
-        response = openai.ChatCompletion.create(
+        # ارسال درخواست به OpenAI API با استفاده از API جدید
+        response = openai.Chat.create(
             model="gpt-3.5-turbo",
             messages=[
                 {"role": "system", "content": "You are a helpful assistant."},
@@ -35,12 +35,13 @@ async def improve_resume(input_data: ResumeInput):
             max_tokens=1000
         )
         # استخراج و بازگشت رزومه بهبود یافته
-        improved_resume = response.choices[0].message['content'].strip()
+        improved_resume = response.choices[0].message.content.strip()
         return {"improved_resume": improved_resume}
     
     except Exception as e:
         # لاگ کردن پیام خطا در کنسول
         print(f"Error occurred during the API call: {str(e)}")
         raise HTTPException(status_code=500, detail="Internal Server Error")
+
 
 
