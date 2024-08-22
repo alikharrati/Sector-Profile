@@ -1,6 +1,6 @@
-from flask import Blueprint, request, jsonify
 import openai
 import os
+from flask import Blueprint, request, jsonify
 
 improve_resume_bp = Blueprint('improve_resume', __name__)
 
@@ -10,10 +10,10 @@ def improve_resume():
         data = request.get_json()
         resume_text = data['resume_text']
 
-        # Set your OpenAI API key from environment variable inside the function
+        # تنظیم کلید API از متغیر محیطی
         openai.api_key = os.getenv('OPENAI_API_KEY')
         
-        response = openai.ChatCompletion.create(
+        response = openai.Chat.create(
             model="gpt-3.5-turbo",
             messages=[
                 {"role": "system", "content": "You are a helpful assistant."},
@@ -27,3 +27,4 @@ def improve_resume():
 
     except Exception as e:
         return jsonify({'error': str(e)}), 500
+
