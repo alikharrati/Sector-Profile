@@ -124,7 +124,8 @@
                 const response = await fetch('https://api.affinda.com/v3/documents', {
                     method: 'POST',
                     headers: {
-                        'Authorization': 'Bearer aff_5c7395b0588a0c83ceb08c6fdb276d06c8d4ca12'  // API Key شما
+                        'Authorization': 'Bearer aff_5c7395b0588a0c83ceb08c6fdb276d06c8d4ca12', // API Key شما
+                        'accept': 'application/json'
                     },
                     body: formData
                 });
@@ -149,4 +150,3 @@
     </script>
 </body>
 </html>
-
