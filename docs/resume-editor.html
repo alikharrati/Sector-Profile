@@ -119,6 +119,7 @@
             const formData = new FormData();
             formData.append('file', file);  // ارسال فایل رزومه
             formData.append('wait', 'true');  // صبر تا پردازش کامل شود
+            formData.append('workspace', 'your-workspace-id'); // شناسه فضای کاری که از API دریافت شده است
 
             try {
                 const response = await fetch('https://api.affinda.com/v3/documents', {
