@@ -128,15 +128,16 @@
                     body: formData
                 });
 
+                const responseData = await response.json();
+
                 if (!response.ok) {
-                    const errorData = await response.json();
-                    throw new Error(errorData.error || 'An unknown error occurred');
+                    console.error('Error details:', responseData);
+                    throw new Error(`Error: ${response.status} - ${response.statusText}. ${responseData.message || ''}`);
                 }
 
-                const data = await response.json();
-                result.innerHTML = `<strong>Processed Resume:</strong><br>${JSON.stringify(data, null, 2)}`;
+                result.innerHTML = `<strong>Processed Resume:</strong><br>${JSON.stringify(responseData, null, 2)}`;
             } catch (error) {
-                console.error('Error:', error);
+                console.error('Error occurred:', error);
                 errorMessage.textContent = error.message;
                 errorMessage.style.display = 'block';
             }
@@ -144,3 +145,4 @@
     </script>
 </body>
 </html>
+
