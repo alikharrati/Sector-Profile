@@ -140,8 +140,21 @@
                     throw new Error(`Error: ${response.status} - ${response.statusText}. ${errorDetails}`);
                 }
 
-                // نمایش نتیجه پردازش رزومه
-                result.innerHTML = `<strong>Processed Resume:</strong><br>${JSON.stringify(responseData, null, 2)}`;
+                // بررسی وضعیت پردازش رزومه
+                if (responseData.meta.isRejected) {
+                    result.innerHTML = `<strong>Resume Rejected:</strong> Your resume was rejected. <br>`;
+                } else {
+                    result.innerHTML = `<strong>Resume Processed:</strong> Your resume was successfully processed. <br>`;
+                }
+
+                // نمایش لینک‌های دانلود PDF و بازبینی
+                if (responseData.meta.pdf) {
+                    result.innerHTML += `<a href="${responseData.meta.pdf}" target="_blank">Download Processed PDF</a><br>`;
+                }
+                if (responseData.meta.reviewUrl) {
+                    result.innerHTML += `<a href="${responseData.meta.reviewUrl}" target="_blank">Review Document</a><br>`;
+                }
+
             } catch (error) {
                 console.error('Error occurred:', error);
                 errorMessage.textContent = error.message;
