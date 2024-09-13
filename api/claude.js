@@ -1,12 +1,22 @@
 export default async function handler(req, res) {
-  // چک کنید که درخواست POST باشد
+  // مدیریت درخواست‌های OPTIONS برای CORS
+  if (req.method === 'OPTIONS') {
+    res.setHeader('Access-Control-Allow-Credentials', true);
+    res.setHeader('Access-Control-Allow-Origin', '*'); // یا دامنه خاص را به جای * قرار دهید
+    res.setHeader('Access-Control-Allow-Methods', 'GET,POST,OPTIONS');
+    res.setHeader('Access-Control-Allow-Headers', 'Content-Type,Authorization');
+    res.status(200).end(); // پاسخ به OPTIONS درخواست
+    return;
+  }
+
+  // مدیریت درخواست‌های POST
   if (req.method !== 'POST') {
     return res.status(405).json({ message: 'Only POST requests are allowed' });
   }
 
-  const apiKey = process.env.API_KEY;  // کلید API مخفی‌شده در Vercel
+  const apiKey = process.env.API_KEY;
 
-  // محتوای رزومه ارسال‌شده از طریق بدنه درخواست (request body)
+  // محتوای رزومه از بدنه درخواست
   const { resume } = req.body;
 
   if (!resume) {
@@ -31,15 +41,12 @@ export default async function handler(req, res) {
       })
     });
 
-    // پردازش پاسخ از API Claude
     const data = await response.json();
 
-    // چک کردن وضعیت موفقیت آمیز درخواست
     if (!response.ok) {
       throw new Error(`Error: ${response.status} - ${response.statusText}`);
     }
 
-    // ارسال پاسخ به کاربر
     res.status(200).json(data);
   } catch (error) {
     console.error('Error occurred:', error);
