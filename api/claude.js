@@ -2,7 +2,7 @@ export default async function handler(req, res) {
   // مدیریت درخواست‌های OPTIONS برای CORS
   if (req.method === 'OPTIONS') {
     res.setHeader('Access-Control-Allow-Credentials', true);
-    res.setHeader('Access-Control-Allow-Origin', '*'); // یا دامنه خاص را به جای * قرار دهید
+    res.setHeader('Access-Control-Allow-Origin', 'https://sector-profile.vercel.app'); // یا دامنه خاص را به جای * قرار دهید
     res.setHeader('Access-Control-Allow-Methods', 'GET,POST,OPTIONS');
     res.setHeader('Access-Control-Allow-Headers', 'Content-Type,Authorization');
     res.status(200).end(); // پاسخ به OPTIONS درخواست
