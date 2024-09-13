@@ -116,26 +116,28 @@
                 return;
             }
 
-            // خواندن فایل و تبدیل به متن
             const reader = new FileReader();
             reader.onload = async function(event) {
                 const resumeText = event.target.result;
 
-                // تنظیمات مربوط به درخواست API Claude
-                const prompt = `Please improve the following resume:\n\n${resumeText}`;
                 const requestData = {
-                    model: "claude-3",
-                    prompt: prompt,
-                    max_tokens: 1024
+                    model: "claude-3-5-sonnet-20240620",
+                    max_tokens: 1024,
+                    messages: [
+                        {
+                            role: "user",
+                            content: `Please improve this resume:\n\n${resumeText}`
+                        }
+                    ]
                 };
 
                 try {
-                    const response = await fetch("https://api.anthropic.com/v1/completions", {
+                    const response = await fetch("https://api.anthropic.com/v1/messages", {
                         method: "POST",
                         headers: {
-                            "x-api-key": "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",
+                            "x-api-key": "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",
                             "content-type": "application/json",
-                            "anthropic-dangerous-direct-browser-access": "true"
+                            "anthropic-version": "2023-06-01"
                         },
                         body: JSON.stringify(requestData)
                     });
@@ -146,8 +148,7 @@
                         throw new Error(`Error: ${response.status} - ${response.statusText}`);
                     }
 
-                    // نمایش پاسخ Claude
-                    result.innerHTML = `<strong>Improved Resume:</strong><br>${responseData.choices[0].text}`;
+                    result.innerHTML = `<strong>Improved Resume:</strong><br>${responseData.messages[0].content}`;
                 } catch (error) {
                     console.error('Error occurred:', error);
                     errorMessage.textContent = error.message;
@@ -160,4 +161,5 @@
     </script>
 </body>
 </html>
+
 
