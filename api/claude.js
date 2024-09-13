@@ -1,10 +1,13 @@
 export default async function handler(req, res) {
-  const apiKey = process.env.API_KEY;  // کلید API از متغیر محیطی خوانده می‌شود
+  res.setHeader('Access-Control-Allow-Origin', '*');  // یا دامنه خاص مانند 'https://your-github-page-url'
+  res.setHeader('Access-Control-Allow-Methods', 'POST');
+  
+  const apiKey = process.env.API_KEY;
 
   const response = await fetch("https://api.anthropic.com/v1/messages", {
     method: "POST",
     headers: {
-      "x-api-key": apiKey,  // کلید API از متغیر محیطی گرفته می‌شود
+      "x-api-key": apiKey,
       "content-type": "application/json",
       "anthropic-version": "2023-06-01"
     },
@@ -18,4 +21,3 @@ export default async function handler(req, res) {
   const data = await response.json();
   res.status(200).json(data);
 }
-
